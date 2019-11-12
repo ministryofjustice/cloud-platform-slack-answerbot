@@ -20,7 +20,9 @@ module AnswerBot
         ["migrate RDS", "RDS instance"] => 
           "https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#migrating-an-rds-instance",
         ["grafana dashboard", "prometheus metrics", "custom alerts"] => 
-          "https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#monitoring-applications"
+          "https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#monitoring-applications",
+        ["gpg", "git-crypt"] => 
+          "https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#git-crypt"
       }
 
       keyword_list.each do |list, href|
