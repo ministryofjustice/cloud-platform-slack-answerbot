@@ -7,29 +7,35 @@ module AnswerBot
       return if (!SlackRubyBot::Config.allow_message_loops?) && (client.self && client.self.id == data.user)
       input = data.text
       keyword_list = {
-        ["user guide"] => 
-          "https://user-guide.cloud-platform.service.justice.gov.uk",
         ["resource limits", "namespace request limits", "usage report"] => 
-          "https://user-guide.cloud-platform.service.justice.gov.uk/concepts.html#namespace-container-resource-limits",
+          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/concepts.html#namespace-container-resource-limits",
         ["template deploy", "DNS changes", "AWS access"] => 
-          "https://user-guide.cloud-platform.service.justice.gov.uk/concepts.html#migrating-to-the-cloud-platform-from-template-deploy",
+          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/concepts.html#migrating-to-the-cloud-platform-from-template-deploy",
         ["kubectl installation"] => 
-          "https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#installation",
+          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#installation",
         ["authenticate"] => 
-          "https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#authentication",
+          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#authentication",
         ["migrate RDS", "RDS instance"] => 
-          "https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#migrating-an-rds-instance",
+          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#migrating-an-rds-instance",
         ["grafana dashboard", "prometheus metrics", "custom alerts"] => 
-          "https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#monitoring-applications",
+          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#monitoring-applications",
         ["gpg", "git-crypt"] => 
-          "https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#git-crypt"
+          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#git-crypt",
+        ["pingdom check"] => 
+          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/documentation/monitoring-an-app/how-to-create-pingdom-checks.html#creating-pingdom-checks", 
+        ["IP Whitelisting", "NAT gateway"] => 
+          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/documentation/other-topics/ip-whitelisting.html#ip-whitelisting",  
+        ["default backend", "custom error page", "http errors"] => 
+          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/documentation/other-topics/custom-default-backend.html#custom-default-backend",  
+        ["CreateContainerConfigError"] =>
+          "Do you see any information on `kubectl -n [your namespace] get events` or `kubectl -n <namespace> describe <pod_name>`"
       }
 
-      keyword_list.each do |list, href|
+      keyword_list.each do |list, text|
         list.each do |keyword|
-          if input.include?(keyword)
+          if input.include?(keyword) && input.match(/docs|guide|documentation|user guide/) && !input.include?("PR")
             puts "Keyword match #{keyword}"
-            client.say(channel: data.channel, text: "User guide: #{href}")
+            client.say(channel: data.channel, text: "#{text} Does this help?")
           end
         end
       end
