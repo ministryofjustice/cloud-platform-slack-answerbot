@@ -2,44 +2,37 @@ require_relative '../config/environment'
 
 module AnswerBot
   class App < SlackRubyBot::Bot
+
+    match /\b(how)\b.*\b(add)\b.*\b(git-crypt)\b.*collab.*$/i do |client, data, _match|
+      client.say(text: "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/documentation/other-topics/git-crypt-setup.html#git-crypt. Does this help?",
+      channel: data.channel,
+      thread_ts: data.thread_ts || data.ts)
+    end
+  
+
+    match /\b(how)\b.*(\b(add)\b.*\b(pingdom)\b|\b(pingdom)\b.*\b(add)\b).*$/i do |client, data, _match|
+      client.say(text: "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/documentation/monitoring-an-app/how-to-create-pingdom-checks.html#overview. Does this help?",
+      channel: data.channel,
+      thread_ts: data.thread_ts || data.ts)
+    end
     
-    scan(/([a-zA-Z0-9]*)/) do |client, data, input|
-      return if (!SlackRubyBot::Config.allow_message_loops?) && (client.self && client.self.id == data.user)
-      input = data.text
-      keyword_list = {
-        ["resource limits", "namespace request limits", "usage report"] => 
-          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/concepts.html#namespace-container-resource-limits",
-        ["template deploy", "DNS changes", "AWS access"] => 
-          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/concepts.html#migrating-to-the-cloud-platform-from-template-deploy",
-        ["kubectl installation"] => 
-          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#installation",
-        ["authenticate"] => 
-          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#authentication",
-        ["migrate RDS", "RDS instance"] => 
-          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#migrating-an-rds-instance",
-        ["grafana dashboard", "prometheus metrics", "custom alerts"] => 
-          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#monitoring-applications",
-        ["gpg", "git-crypt"] => 
-          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/tasks.html#git-crypt",
-        ["pingdom check"] => 
-          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/documentation/monitoring-an-app/how-to-create-pingdom-checks.html#creating-pingdom-checks", 
-        ["IP Whitelisting", "NAT gateway"] => 
-          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/documentation/other-topics/ip-whitelisting.html#ip-whitelisting",  
-        ["default backend", "custom error page", "http errors"] => 
-          "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/documentation/other-topics/custom-default-backend.html#custom-default-backend",  
-        ["CreateContainerConfigError"] =>
-          "Do you see any information on `kubectl -n [your namespace] get events` or `kubectl -n <namespace> describe <pod_name>`"
-      }
-
-      keyword_list.each do |list, text|
-        list.each do |keyword|
-          if input.include?(keyword) && input.match(/docs|guide|documentation|user guide/) && !input.include?("PR")
-            puts "Keyword match #{keyword}"
-            client.say(channel: data.channel, text: "#{text} Does this help?")
-          end
-        end
-      end
-
+    match /\b(how)\b.*\b(access|events)\b.*\b(kibana)\b.*$/i do |client, data, _match|
+      client.say(text: "I found this on user guide https://user-guide.cloud-platform.service.justice.gov.uk/documentation/logging-an-app/access-logs.html#accessing-application-log-data. Does this help?",
+      channel: data.channel,
+      thread_ts: data.thread_ts || data.ts)
+    end
+    
+    match /^(localhost:8080).*(connection refused).*$/i do |client, data, _match|
+      client.say(text: "Have you gone through the process mentioned here: https://user-guide.cloud-platform.service.justice.gov.uk/documentation/getting-started/kubectl-config.html#how-to-use-kubectl-to-connect-to-the-cluster",
+      channel: data.channel,
+      thread_ts: data.thread_ts || data.ts)
+    end
+   
+    match /((add).*\b(github)\b|\b(github)\b.*\b(permissions)\b).*$/i do |client, data, _match|
+      client.say(text: "Do you want to add any member of your team to Organisation GitHub? 
+        If so, please talk to #digitalservicedesk. If not, please wait, a member of Cloud Platform team will respond",
+      channel: data.channel,
+      thread_ts: data.thread_ts || data.ts)
     end
 
   end

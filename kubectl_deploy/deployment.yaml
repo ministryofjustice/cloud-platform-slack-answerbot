@@ -4,7 +4,7 @@ metadata:
   name: answerbot-app
   namespace: poornima-dev
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -12,7 +12,8 @@ spec:
     spec:
       containers:
         - name: slack-answerbot
-          image: ministryofjustice/cloud-platform-slack-answerbot:1.5
+          image: poornimak/slash-bot:1.0
+          imagePullPolicy: Always
           env:
             - name: SLACK_API_TOKEN
               valueFrom:
