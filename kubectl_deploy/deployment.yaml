@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: slack-answerbot
-          image: poornimak/slash-bot:1.0
+          image: ministryofjustice/cloud-platform-slack-answerbot:1.5
           imagePullPolicy: Always
           env:
             - name: SLACK_API_TOKEN
