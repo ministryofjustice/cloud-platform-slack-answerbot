@@ -12,7 +12,8 @@ spec:
     spec:
       containers:
         - name: slack-answerbot
-          image: ministryofjustice/cloud-platform-slack-answerbot:1.4
+          image: ministryofjustice/cloud-platform-slack-answerbot:1.5
+          imagePullPolicy: Always
           env:
             - name: SLACK_API_TOKEN
               valueFrom:
