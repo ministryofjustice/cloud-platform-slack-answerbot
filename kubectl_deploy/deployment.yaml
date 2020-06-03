@@ -1,10 +1,13 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: answerbot-app
   namespace: poornima-dev
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: answerbot-app
   template:
     metadata:
       labels:
