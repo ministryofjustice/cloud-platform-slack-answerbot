@@ -58,7 +58,7 @@ GEM
       method_source (~> 0.9.0)
     puma (4.3.5)
       nio4r (~> 2.0)
-    rack (2.0.8)
+    rack (2.1.4)
     rack-protection (2.0.8.1)
       rack
     rest-client (2.1.0)
@@ -102,7 +102,7 @@ DEPENDENCIES
   celluloid-io
   pry
   puma (~> 4.3)
-  rack (~> 2.0.8)
+  rack (~> 2.1.4)
   rest-client
   sinatra (~> 2.0)
   slack-ruby-bot
