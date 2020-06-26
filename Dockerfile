@@ -1,4 +1,4 @@
-FROM ruby:2.6-alpine
+FROM ruby:2.6.5-alpine
 
 # These are needed to support building native extensions during
 # bundle install step
